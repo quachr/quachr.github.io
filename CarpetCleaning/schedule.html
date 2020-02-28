@@ -7,21 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Carpet Cleaning</title>
     <link rel="stylesheet" href="main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <h2>Rossi Carpet Cleaning</h2>
-    <section class="right">
-        <a href="./login.html">Login</a>
-        <a href="./register.html">Register</a>
-    </section>
-    <ul>
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./about.html">About</a></li>
-        <li><a href="./gallery.html">Gallery</a></li>
-        <li><a href="./contact.html">Contact</a></li>
-
-    </ul>
+    <script>
+        $(function () {
+            $("#header").load("./header.html");
+        });
+    </script>
+    
+    <div id="header"></div>
 
     <div class="container center">
         <form action="login.php" method="post">
