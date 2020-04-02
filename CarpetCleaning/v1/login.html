@@ -2,39 +2,42 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Carpet Cleaning</title>
-    <link rel="stylesheet" href="main.css">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Carpet Cleaning</title>
+	<link rel="stylesheet" href="main.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <script>
-        $(function () {
-            $("#header").load("./header.html");
-        });
-    </script>
-    
-    <div id="header"></div>
-    <div class="container center">
-        <form action="login.php" method="post">
+	<script>
+		$(function () {
+			$("#header").load("./header.html");
+		});
+	</script>
 
-            <div class="container">
-                <label for="uname"><strong>Username: </strong></label>
-                <input type="text" placeholder="Enter Username" name="uname" required>
-                <br>
-                <br>
-                <label for="psw"><strong>Password: </strong></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
-                <br>
-                <br>
-                <button type="submit">Sign Up</button>
-            </div>
-        </form>
-    </div>
+	<div id="header"></div>
+
+	<div align="center">
+		<form action="login.php" method="post">
+			<fieldset>
+				<p>
+					<label><strong>Username: </strong></label>
+					<input type="text" placeholder="Enter Username" name="uname" required>
+					<br>
+					<br>
+					<label><strong>Password: </strong></label>
+					<input type="password" placeholder="Enter Password" name="psw" required>
+					<br>
+					<br>
+					<button type="submit">Sign Up</button>
+				</p>
+			</fieldset>
+			
+			
+		</form>
+	</div>
 
 </body>
 

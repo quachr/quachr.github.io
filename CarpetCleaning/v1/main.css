@@ -52,10 +52,13 @@ form {
 
 /* ================================LOGIN PAGE=================================== */
 
+body{
+    display:flex;
+}
 .c{
-    width: 20%; 
-    margin: 25px auto;
-    text-align: right;
+    display: table-cell;
+   text-align: center;
+   vertical-align: middle;
 }
 .center {
     display: block;
