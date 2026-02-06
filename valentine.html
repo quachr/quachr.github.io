@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Message for You ❤️</title>
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --secondary: #ffccd5;
+            --bg: #fff0f3;
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            overflow: hidden; background-color: var(--bg);
+            font-family: 'Arial Rounded MT Bold', 'Helvetica', sans-serif;
+        }
+
+        #overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--primary); color: white;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 100; flex-direction: column; cursor: pointer;
+            padding: 20px; text-align: center;
+        }
+
+        #container {
+            position: relative; z-index: 10;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; height: 100%; width: 90%; margin: 0 auto;
+        }
+
+        .card {
+            background: white; padding: 25px; border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+            text-align: center; width: 100%; box-sizing: border-box;
+        }
+
+        h1 { color: var(--primary); font-size: 1.6rem; margin: 15px 0; line-height: 1.3; }
+        
+        .gif-box img { width: 100%; max-width: 200px; border-radius: 20px; }
+
+        .btn-group {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 15px; margin-top: 20px; width: 100%;
+        }
+
+        button {
+            border: none; border-radius: 50px; padding: 15px 40px;
+            font-size: 1.2rem; font-weight: bold; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            touch-action: manipulation;
+        }
+
+        #yesBtn { background: var(--primary); color: white; width: 80%; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4); z-index: 50; }
+
+        #noBtn {
+            background: #f0f0f0; color: #888; font-size: 0.9rem;
+            position: relative; padding: 10px 20px;
+        }
+
+        #timer { margin-top: 20px; font-size: 0.9rem; color: #ff4d6d; font-weight: bold; }
+
+        .hidden { display: none !important; }
+
+        .heart-fall {
+            position: absolute; pointer-events: none; z-index: 1;
+        }
+
+        .shake { animation: shake 0.4s ease-in-out; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="overlay" onclick="startApp()">
+        <div style="font-size: 50px;">💌</div>
+        <h2>You have a new message!</h2>
+        <p>Tap to open</p>
+    </div>
+
+    <div id="container">
+        <div class="card" id="mainCard">
+            <div class="gif-box">
+                <img id="mainGif" src="https://media.tenor.com/9v6_vN_oV70AAAAi/peach-goma.gif" alt="Cute Cats">
+            </div>
+            <h1 id="headline">Will you be my Valentine? ❤️</h1>
+            <div class="btn-group">
+                <button id="yesBtn">YES! 😍</button>
+                <button id="noBtn">No 🥺</button>
+            </div>
+        </div>
+
+        <div class="card hidden" id="successCard">
+            <img src="https://media.tenor.com/UInm8M658p0AAAAi/peach-goma-love.gif" width="180">
+            <h1>YAY! I love you! 🥰</h1>
+            <p>I'm the luckiest person in the world.</p>
+            <div id="timer">Countdown to Feb 14th...</div>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const mainCard = document.getElementById('mainCard');
+        const successCard = document.getElementById('successCard');
+        const headline = document.getElementById('headline');
+        let yesScale = 1;
+        let noCount = 0;
+
+        const messages = [
+            "Are you sure?", "Think about it!", "Really sure??", "Please? 🥺", "I'll be so sad...", "You're joking, right?", "Okay, now you're just teasing!", "Look at the big button!"
+        ];
+
+        function startApp() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        noBtn.addEventListener('click', () => {
+            mainCard.classList.add('shake');
+            setTimeout(() => mainCard.classList.remove('shake'), 400);
+
+            yesScale += 0.5;
+            yesBtn.style.transform = `scale(${yesScale})`;
+            
+            // Mobile teleportation
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+
+            noCount++;
+            headline.innerText = messages[noCount % messages.length];
+        });
+
+        yesBtn.addEventListener('click', () => {
+            mainCard.classList.add('hidden');
+            successCard.classList.remove('hidden');
+            spawnHearts();
+            startTimer();
+        });
+
+        function spawnHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-fall');
+                heart.innerHTML = ['❤️', '💖', '💝', '💕'][Math.floor(Math.random() * 4)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                document.body.appendChild(heart);
+                
+                heart.animate([
+                    { transform: 'translateY(-10vh) rotate(0deg)', opacity: 1 },
+                    { transform: 'translateY(110vh) rotate(360deg)', opacity: 0 }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    easing: 'linear'
+                });
+
+                setTimeout(() => heart.remove(), 5000);
+            }, 200);
+        }
+
+        function startTimer() {
+            const valDay = new Date('February 14, 2026 00:00:00').getTime();
+            setInterval(() => {
+                const now = new Date().getTime();
+                const diff = valDay - now;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+                document.getElementById('timer').innerHTML = `Only ${d}d ${h}h ${m}m ${s}s left! 🌹`;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
