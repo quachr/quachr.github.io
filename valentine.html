@@ -3,90 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>A Message for You ❤️</title>
+    <title>For My Favorite Person ❤️</title>
     <style>
         :root {
             --primary: #ff4d6d;
-            --secondary: #ffccd5;
             --bg: #fff0f3;
         }
 
+        /* Prevent scrolling and ensure full height */
+        * { box-sizing: border-box; }
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
             overflow: hidden; background-color: var(--bg);
-            font-family: 'Arial Rounded MT Bold', 'Helvetica', sans-serif;
+            font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* Perfect Centering Layer */
+        .flex-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100dvh; /* Dynamic viewport height for mobile browsers */
+            width: 100%;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
         }
 
         #overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; inset: 0;
             background: var(--primary); color: white;
             display: flex; justify-content: center; align-items: center;
             z-index: 100; flex-direction: column; cursor: pointer;
-            padding: 20px; text-align: center;
-        }
-
-        #container {
-            position: relative; z-index: 10;
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; height: 100%; width: 90%; margin: 0 auto;
+            text-align: center;
         }
 
         .card {
-            background: white; padding: 25px; border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
-            text-align: center; width: 100%; box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 40px 20px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.15);
+            text-align: center;
+            width: 100%;
+            max-width: 350px;
+            border: 2px solid white;
         }
 
-        h1 { color: var(--primary); font-size: 1.6rem; margin: 15px 0; line-height: 1.3; }
+        h1 { color: var(--primary); font-size: 1.5rem; margin: 20px 0; }
         
-        .gif-box img { width: 100%; max-width: 200px; border-radius: 20px; }
+        .gif-box img { 
+            width: 140px; 
+            height: 140px; 
+            object-fit: contain;
+            border-radius: 20px; 
+        }
 
         .btn-group {
-            display: flex; flex-direction: column; align-items: center;
-            gap: 15px; margin-top: 20px; width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+            width: 100%;
         }
 
         button {
-            border: none; border-radius: 50px; padding: 15px 40px;
-            font-size: 1.2rem; font-weight: bold; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none; border-radius: 50px; padding: 16px;
+            font-size: 1.1rem; font-weight: bold; width: 100%;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             touch-action: manipulation;
         }
 
-        #yesBtn { background: var(--primary); color: white; width: 80%; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4); z-index: 50; }
+        #yesBtn { background: var(--primary); color: white; box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3); }
 
-        #noBtn {
-            background: #f0f0f0; color: #888; font-size: 0.9rem;
-            position: relative; padding: 10px 20px;
-        }
+        #noBtn { background: #f0f0f0; color: #888; width: auto; padding: 10px 25px; font-size: 0.9rem; }
 
-        #timer { margin-top: 20px; font-size: 0.9rem; color: #ff4d6d; font-weight: bold; }
+        #timer { margin-top: 20px; font-size: 0.85rem; color: #ff4d6d; font-family: monospace; }
 
         .hidden { display: none !important; }
 
+        /* Hearts spawn above screen and fall */
         .heart-fall {
-            position: absolute; pointer-events: none; z-index: 1;
+            position: absolute;
+            top: -10%; /* Start above screen */
+            pointer-events: none;
+            z-index: 1;
+            user-select: none;
         }
 
         .shake { animation: shake 0.4s ease-in-out; }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
     </style>
 </head>
 <body>
 
     <div id="overlay" onclick="startApp()">
-        <div style="font-size: 50px;">💌</div>
-        <h2>You have a new message!</h2>
-        <p>Tap to open</p>
+        <div style="font-size: 60px; margin-bottom: 10px;">💌</div>
+        <h2 style="margin: 0;">A surprise for you...</h2>
+        <p style="opacity: 0.8;">Tap to open</p>
     </div>
 
-    <div id="container">
+    <div class="flex-container">
         <div class="card" id="mainCard">
             <div class="gif-box">
-                <img id="mainGif" src="https://media.tenor.com/9v6_vN_oV70AAAAi/peach-goma.gif" alt="Cute Cats">
+                <img id="mainGif" src="https://media.tenor.com/9v6_vN_oV70AAAAi/peach-goma.gif">
             </div>
             <h1 id="headline">Will you be my Valentine? ❤️</h1>
             <div class="btn-group">
@@ -96,10 +122,10 @@
         </div>
 
         <div class="card hidden" id="successCard">
-            <img src="https://media.tenor.com/UInm8M658p0AAAAi/peach-goma-love.gif" width="180">
-            <h1>YAY! I love you! 🥰</h1>
-            <p>I'm the luckiest person in the world.</p>
-            <div id="timer">Countdown to Feb 14th...</div>
+            <img src="https://media.tenor.com/UInm8M658p0AAAAi/peach-goma-love.gif" width="140">
+            <h1>I Knew It! 🥰</h1>
+            <p style="color: #666; margin: 0;">You've made me the happiest person ever!</p>
+            <div id="timer">Calculating time...</div>
         </div>
     </div>
 
@@ -113,7 +139,7 @@
         let noCount = 0;
 
         const messages = [
-            "Are you sure?", "Think about it!", "Really sure??", "Please? 🥺", "I'll be so sad...", "You're joking, right?", "Okay, now you're just teasing!", "Look at the big button!"
+            "Wait, what?", "Are you sure?", "Think again! 🥺", "But look how cute I am!", "I'll give you cookies!", "Last chance!", "Pretty please??", "Just click the big one!"
         ];
 
         function startApp() {
@@ -124,15 +150,15 @@
             mainCard.classList.add('shake');
             setTimeout(() => mainCard.classList.remove('shake'), 400);
 
-            yesScale += 0.5;
+            yesScale += 0.4;
             yesBtn.style.transform = `scale(${yesScale})`;
             
-            // Mobile teleportation
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 50);
+            // Randomly teleport the No button within safe bounds
+            const maxX = window.innerWidth - noBtn.offsetWidth;
+            const maxY = window.innerHeight - noBtn.offsetHeight;
             noBtn.style.position = 'fixed';
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
+            noBtn.style.left = Math.random() * maxX + 'px';
+            noBtn.style.top = Math.random() * maxY + 'px';
 
             noCount++;
             headline.innerText = messages[noCount % messages.length];
@@ -149,21 +175,23 @@
             setInterval(() => {
                 const heart = document.createElement('div');
                 heart.classList.add('heart-fall');
-                heart.innerHTML = ['❤️', '💖', '💝', '💕'][Math.floor(Math.random() * 4)];
+                heart.innerHTML = ['❤️', '💖', '💝', '💕', '🌹'][Math.floor(Math.random() * 5)];
                 heart.style.left = Math.random() * 100 + 'vw';
                 heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
                 document.body.appendChild(heart);
                 
+                // Animation from top to bottom
+                const duration = Math.random() * 2000 + 3000;
                 heart.animate([
                     { transform: 'translateY(-10vh) rotate(0deg)', opacity: 1 },
                     { transform: 'translateY(110vh) rotate(360deg)', opacity: 0 }
                 ], {
-                    duration: Math.random() * 3000 + 2000,
+                    duration: duration,
                     easing: 'linear'
                 });
 
-                setTimeout(() => heart.remove(), 5000);
-            }, 200);
+                setTimeout(() => heart.remove(), duration);
+            }, 150);
         }
 
         function startTimer() {
@@ -171,11 +199,17 @@
             setInterval(() => {
                 const now = new Date().getTime();
                 const diff = valDay - now;
+                
+                if (diff < 0) {
+                    document.getElementById('timer').innerHTML = "It's Valentine's Day! ❤️";
+                    return;
+                }
+
                 const d = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const s = Math.floor((diff % (1000 * 60)) / 1000);
-                document.getElementById('timer').innerHTML = `Only ${d}d ${h}h ${m}m ${s}s left! 🌹`;
+                document.getElementById('timer').innerHTML = `${d}d : ${h}h : ${m}m : ${s}s`;
             }, 1000);
         }
     </script>
